@@ -1,0 +1,36 @@
+public class Solution {
+    public string LongestPalindrome(string s) {
+        if (s.Length == 0) {
+            return "";
+        }
+        
+        string longest = ""; // La variable para el palíndromo más largo
+        // Recorrer la cadena y comprobar todos los posibles palíndromos
+        for (int i = 0; i < s.Length; i++) {
+            // Buscar palíndromos de longitud impar
+            string palindrome = ExpandAroundCenter(s, i, i);
+            if (palindrome.Length > longest.Length) {
+                longest = palindrome;
+            }
+            
+            // Buscar palíndromos de longitud par
+            palindrome = ExpandAroundCenter(s, i, i + 1);
+            if (palindrome.Length > longest.Length) {
+                longest = palindrome;
+            }
+        }
+        
+        return longest; // Retorna el palíndromo más largo encontrado
+    }
+    
+    // Expansión alrededor del centro
+    private string ExpandAroundCenter(string s, int left, int right) {
+        while (left >= 0 && right < s.Length && s[left] == s[right]) {
+            left--;
+            right++;
+        }
+        
+        // Retorna el palíndromo encontrado
+        return s.Substring(left + 1, right - left - 1);
+    }
+}
